@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %} Start - CC {% endblock%}
+
+{% block body %}
+            <div class="main-cat">
+                <div class="main-title"></div>
+                <div class="cc-sart-layout">
+                    <div style="margin-top: 220px;">
+                        Start Your Journey as a Content Creator!
+                    </div>
+                    <div style="margin-top:-190px;">
+                        <a href="{{ url_for('new_cc') }}">
+                            <button type="button" class="get-started">Get Started</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

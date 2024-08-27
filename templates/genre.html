@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %} Genre {% endblock%}
+
+{% block body %}
+            <div class="main-cat">
+                <div class="main-title">
+                    <div class="first-heading">
+                        Genre
+                    </div>
+                </div>
+                <div class="songs-list">
+                    <div class="song">
+                        <div class="song-background">
+                            <div class="song-poster">
+                                <a href="/genre/{{genre}}">
+                                    <img src="{{ url_for('genre_cover', filename='static/uploads/genre-cover/' + genre_coverr) }}" class="poster-dim" alt="Genre image">
+                                </a>
+                            </div>
+                            <div class="song-name">
+                                <a href="/genre/{{genre}}" style="text-decoration: none;">
+                                    {{genre}}
+                                </a>
+                            </div>
+                            <div class="song-artist">
+                                Genre &centerdot; Rythm
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+{% endblock %}

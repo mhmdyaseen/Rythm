@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %} Genre Songs{% endblock%}
+
+{% block body %}
+            <div class="main-cat">
+                <div class="album-details">
+                    <div class="album-cov">
+                        <img src="{{ url_for('genre_cover', filename='static/uploads/genre-cover/' + genres[genre]) }}" class="album-cover">
+                    </div>
+                    <div class="album-info">
+                        <div>Genre</div>
+                        <div class="album-name">{{genre}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="song-list">
+                <div class="list-heading">
+                    Songs
+                </div>
+                <div class="main-list">
+                    {% if genres_info|length == 0 %}
+                    <h3 style="color: gray;">Currently You Haven't Added any Songs to this Playlist.</h3>
+                    {% else %}
+                    {% for genre_info in genres_info %}
+                    <div style="display: flex; justify-content:space-between; margin-top:20px;">
+                        <div class="list-poster">
+                            <a style="cursor:pointer;"  onclick="audioControl('{{genre_info[1]}}')" id="play-button">
+                                <img src="{{ url_for('genre_cover', filename=genre_info[0] )}}" class="playlist-img" alt="Song image">
+                            </a>
+                            <audio src="{{url_for('play_song', song_name=genre_info[1])}}" style="display: none;" id="{{genre_info[1]}}"></audio>
+                            <div class="list-detail" style="display:inline-block;">
+                                <a style="cursor:pointer;"  onclick="audioControl('{{genre_info[1]}}')" id="play-button">{{genre_info[1]}}</a>
+                                    <audio src="{{url_for('play_song', song_name=genre_info[1])}}" style="display: none;" id="{{genre_info[1]}}"></audio>
+                                <div class="list-show">{{genre_info[2]}}</div>
+                            </div>
+                        </div>
+                        <div style="margin-right:150px; font-size: 14px; color:rgba(255, 255, 255,0.54);">
+                            <div class="dropdown">
+                                <button onclick="myFunction(this)" class="dropbtn">
+                                    &centerdot;&centerdot;&centerdot;
+                                </button>
+                                <div id="myDropdown" class="dropdown-content">
+                                    <a href="/lyrics/{{genre_info[1]}}">Lyrics</a>
+                                    <p style="color: grey; margin-left:15px;">Rate Song &darr;</p>
+                                    <form style="margin-left: 15px;" action="/rate_song/{{genre_info[1]}}" method="POST">
+                                        <button type="submit" class="rate-button" name="rating" value="1">1</button>
+                                        <button type="submit" class="rate-button" name="rating" value="2">2</button>
+                                        <button type="submit" class="rate-button" name="rating" value="3">3</button>
+                                        <button type="submit" class="rate-button" name="rating" value="4">4</button>
+                                        <button type="submit" class="rate-button" name="rating" value="5">5</button>
+                                    </form> 
+                                    {% if playlists_name|length == 0 %}    
+                                    <p style="margin-top:15px;"></p>           
+                                    {% else %}
+                                    <p style="color: grey; margin-left:15px;">Add to Playlist &darr;</p>
+                                    {% for playlist_name in playlists_name %}
+                                        <a href="/add_to_playlist/{{playlist_name}}/{{genre_info[1]}}" style="margin-bottom:8px;">{{playlist_name}}</a>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+{% endblock %}

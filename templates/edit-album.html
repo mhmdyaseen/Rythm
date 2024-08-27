@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %} New Album {% endblock%}
+
+{% block body %}
+            <div class="main-cat">
+                <div class="main-title">
+                    <div class="first-heading">
+                        Edit Album
+                    </div>
+                </div>
+                <div style="margin-left:400px;">
+                    <form method="POST" action="/edit_album/{{album_details.name}}" enctype="multipart/form-data" class="song-upload-form">
+                        <label for="album-cover">Album Cover : </label>
+                        <input type="file" name="album-cover" id="album-cover" value="{{album_details.album_cover_path}}" style="margin-left: 25px;" accept="image/*" required>
+                        <br><br>
+                        <label for="album-name" style="margin-right: 0px;">Album Name :</label>
+                        <input type="text" name="album-name" id="album-name" value="{{album_details.name}}" class="song-upload-e1" required>
+                        <br>
+                        <label for="artist-name" style="margin-right: 5px;">Artist Name :</label>
+                        <input type="text" name="artist-name" id="artist-name" value="{{album_details.artist_name}}" class="song-upload-e1" required>
+                        <br>
+                        
+                        <label for="year" style="margin-right: 60px;">Year :</label>
+                        <input type="number" name="year" id="year" value="{{album_details.year}}" class="song-upload-e1" required>
+                        <br>
+                        <div>
+                            <input type="submit" class="get-started" style="margin-top: 20px;">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+{% endblock %}

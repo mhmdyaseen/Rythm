@@ -1,0 +1,177 @@
+*{
+    background-color: rgb(13,26,53) ;
+}
+
+  .gr{
+    background-color: rgb(140, 216, 27); 
+    filter: brightness(80%);
+    color: rgb(255, 255, 255);
+    min-height: 800px;
+    border-radius: 40px;
+    margin-top: 0px;
+    margin-left: 15px;
+    margin-right: 29px;
+    margin-bottom: 30px;
+    padding-top: 295px;
+    padding-bottom: 90px;
+    padding-left: 29px;
+    padding-right: 29px;
+    font-family: 'Old Standard TT';
+    font-size: 87px;
+    font-weight: 700;
+    line-height: 100px;
+    box-shadow: 14px 14px 17px black;
+  }
+  .button, .index-button{
+    border-style: solid;
+    border-color: black;
+    background-color: black;
+    color: white;
+    border-radius: 14px;
+    margin-left: 23px;
+    margin-bottom: 12px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 115px;
+    padding-right: 115px;
+    font-weight: bold;
+    text-align: center;
+    transition: all 0.15s;
+  }
+  .index-button{
+    text-decoration: none;
+    margin-left: 15px;
+    border-radius: 14px;
+    padding-left: 100px;
+    padding-right: 100px;
+    transition: all 0.15s;
+  }
+  .index-button:hover{
+    background-color: rgb(228, 70, 149);
+    color: white;
+    border-color: rgb(228, 70, 149);
+  }
+  .button:hover{
+    background-color: rgb(228, 70, 149);
+    color: white;
+    border-color: rgb(228, 70, 149);
+  }
+.e1{
+    font-family: 'Lato';
+    border-radius: 25px;
+    border-style: solid;
+    font-weight: bold;
+    border-color: black;
+    color: white;
+    margin-left: 20px;
+    text-align: left;
+    margin-bottom: 15px;
+    padding-right: 100px;
+    border-width: 3.5px;
+    padding-left: 6px;
+}
+.e1::placeholder{
+    padding-left: 6px;
+}
+  .login{
+    margin-top: 0px;
+  }
+  .greeting, .index-greeting{
+    font-family: 'Lato';
+    font-size: 60px;
+    font-weight: 600;
+    color: white;
+    column-gap: 30px;
+  }
+  .index-greeting{
+    font-size: 65px;
+  }
+  .brand{
+    text-decoration: none;
+    color: rgb(228, 70, 149);
+    font-family: 'Lato';
+    font-weight: 900;
+    font-size: 24px;
+    display: inline-block;
+    vertical-align: top;
+    transition: color 0.15s;
+  }
+  .brand:hover{
+    cursor: pointer;
+  }
+  .content{
+    text-align: center;
+    padding-top: 188px;
+  }
+  .index-content{
+    text-align: center;
+    padding-top: 250px;
+  }
+  .signup-content{
+    text-align: center;
+    padding-top: 155px;
+  }
+  .rythm{
+    border-radius: 29px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-weight: bold;
+    color: rgb(228, 70, 149);
+    text-decoration: underline;
+    transition: color 0.15s;
+  }
+  .rythm:hover{
+    cursor: pointer;
+  }
+  .logo{
+    width: 25px;
+    vertical-align: top;
+  }
+  .admin-log{
+    text-decoration: none;
+    color:white;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 100px;
+    margin-bottom: 0px;
+    margin-top: 7px;
+    margin-left: 400px;
+    margin-right: 19px;
+    font-weight: bold;
+    font-size: 19px;
+    cursor:pointer;
+    transition: color 0.15s;
+  }
+  .admin-log:hover{
+    color: rgb(228, 70, 149);
+  }
+  .admin-signup{
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor:pointer;
+    transition: color 0.15s;
+  }
+  .admin-signup:hover{
+    color: rgb(228, 70, 149);
+  }
+
+  .up{
+    color: white;
+    margin-left: 20px;
+    margin-right: 10px;
+  }
+  .lnk{
+    color: lightyellow;
+    text-decoration: none;
+    margin-left: 5px;
+    cursor:pointer;
+    transition: all 0.15s;
+  }
+  .lnk:hover{
+    color: rgb(228, 70, 149);
+  }

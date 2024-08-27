@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %} Playlist {% endblock%}
+
+{% block body %}
+            <div class="main-cat">
+                <div class="album-details">
+                    <div class="album-cov">
+                        <img src="{{ url_for('playlist_cover', filename='static/uploads/playlist-cover/cover.jpg') }}" class="album-cover">
+                    </div>
+                    <div class="album-info">
+                        <div>Playlist</div>
+                        <div class="album-name">{{playlist_info[0]}}</div>
+                        <div class="artist-name">{{username}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="song-list">
+                <div class="list-heading">
+                    Songs
+                </div>
+                <div class="main-list">
+                    {% if songs|length == 0 %}
+                    <h3 style="color: gray;">Currently You Haven't Added any Songs to this Playlist.</h3>
+                    {% else %}
+                    {% for song in songs %}
+                    <div style="display: flex; justify-content:space-between; margin-top:20px;">
+                        <div class="list-poster">
+                                <a style="cursor:pointer;"  onclick="audioControl('{{song[1]}}')" id="play-button">
+                                    <img src="{{ url_for('song_cover', filename=song.cover_path )}}" class="playlist-img" alt="Album song image">
+                                </a>
+                                <audio src="{{url_for('play_song', song_name=song.name)}}" style="display: none;" id="{{song.name}}"></audio>
+                            <div class="list-detail" style="display:inline-block;">
+                                <a style="cursor:pointer;"  onclick="audioControl('{{song.name}}')" id="play-button"><div>{{song.name}}</div></a>
+                                    <audio src="{{url_for('play_song', song_name=song.name)}}" style="display: none;" id="{{song.name}}"></audio>    
+                                <div class="list-show">{{song.artist_name}}</div>
+                            </div>
+                        </div>
+                        <div style="margin-right:150px; font-size: 14px; color:rgba(255, 255, 255,0.54);">
+                            {{song.duration}}
+                            <div class="dropdown">
+                                <button onclick="myFunction(this)" class="dropbtn">
+                                    &centerdot;&centerdot;&centerdot;
+                                </button>
+                                <div id="myDropdown" class="dropdown-content">
+                                        <a href="/delete_playlist_song/{{playlist_info[0]}}/{{song.name}}">Delete</a>
+                                        <a href="/lyrics/{{song.name}}">Lyrics</a> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+{% endblock %}

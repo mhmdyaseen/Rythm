@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %} Songs - Album {% endblock%}
+
+{% block body %}
+            <div class="main-cat">
+                <div class="album-details">
+                    <div class="album-cov">
+                        <img src="{{ url_for('album_cover', filename=album_details[0]) }}" class="album-cover">
+                    </div>
+                    <div class="album-info">
+                        <div>Album</div>
+                        <div class="album-name">{{album_details[1]}}</div>
+                        <div class="artist-name">{{album_details[2]}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="song-list">
+                <div class="list-heading">
+                    Songs
+                </div>
+                <div class="main-list">
+                    {% if songs_info|length == 0 %}
+                        <h3 style="color: gray;">Currently You Haven't Uploaded Any Songs In This Album.</h3>
+                    {% else %}
+                    {% for song_info in songs_info %}
+                    <div style="display: flex; justify-content:space-between; margin-top:20px;">
+                        <div class="list-detail">
+                            <a style="cursor:pointer;"  onclick="audioControl('{{song_info[1]}}')" id="play-button">{{song_info[0]}}</a>
+                                    <audio src="{{url_for('play_song', song_name=song_info[0])}}" style="display: none;" id="{{song_info[1]}}"></audio>
+                            <div class="list-show">{{song_info[1]}}</div>
+                        </div>
+                        <div style="margin-right:150px; font-size: 14px; color:rgba(255, 255, 255,0.54);">
+                            {{song_info[2]}}
+                            <div class="dropdown">
+                                <button onclick="myFunction(this)" class="dropbtn">
+                                    &centerdot;&centerdot;&centerdot;
+                                </button>
+                                <div id="myDropdown" class="dropdown-content">
+                                        <a href="/lyrics/{{song_info[0]}}">Lyrics</a> 
+                                        <p style="color: grey; margin-left:15px;">Rate Song &darr;</p>
+                                        <form style="margin-left: 15px;" action="/rate_song/{{song_info[1]}}" method="POST">
+                                            <button type="submit" class="rate-button" name="rating" value="1">1</button>
+                                            <button type="submit" class="rate-button" name="rating" value="2">2</button>
+                                            <button type="submit" class="rate-button" name="rating" value="3">3</button>
+                                            <button type="submit" class="rate-button" name="rating" value="4">4</button>
+                                            <button type="submit" class="rate-button" name="rating" value="5">5</button>
+                                        </form> 
+                                        {% if playlists_name|length == 0 %}    
+                                        <p style="margin-top:15px;"></p>           
+                                        {% else %}
+                                        <p style="color: grey; margin-left:15px;">Add to Playlist &darr;</p>
+                                        {% for playlist_name in playlists_name %}
+                                            <a href="/add_to_playlist/{{playlist_name}}/{{song_info[1]}}" style="margin-bottom:8px;">{{playlist_name}}</a>
+                                        {% endfor %}
+                                        {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div> 
+        </div>
+{% endblock %}        

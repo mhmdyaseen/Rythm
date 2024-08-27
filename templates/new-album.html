@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %} New Album {% endblock%}
+
+{% block body %}
+            <div class="main-cat">
+                <div class="main-title">
+                    <div class="first-heading">
+                        New Album
+                    </div>
+                </div>
+                <div style="margin-left:400px;">
+                    <form method="POST" action="/upload_album" enctype="multipart/form-data" class="song-upload-form">
+                        <label for="album-cover">Album Cover : </label>
+                        <input type="file" name="album-cover" id="album-cover" style="margin-left: 25px;" accept="image/*" required>
+                        <br><br>
+                        <label for="album-name" style="margin-right: 0px;">Album Name :</label>
+                        <input type="text" name="album-name" id="album-name" class="song-upload-e1" required>
+                        <br>
+                        <label for="artist-name" style="margin-right: 5px;">Artist Name :</label>
+                        <input type="text" name="artist-name" id="artist-name" class="song-upload-e1" required>
+                        <br>
+                        
+                        <label for="year" style="margin-right: 60px;">Year :</label>
+                        <input type="number" name="year" id="year" class="song-upload-e1" required>
+                        <br>
+                        <div>
+                            <a href="CC-home.html">
+                                <button type="submit" class="get-started" style="margin-top: 20px;">Submit</button>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+{% endblock %}

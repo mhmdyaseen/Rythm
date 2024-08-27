@@ -1,0 +1,33 @@
+{% extends 'base-admin.html' %}
+
+{% block title %} Artists - Admin {% endblock%}
+
+{% block body %}
+            <div class="main-cat">
+                <div class="main-title">
+                    <div class="first-heading">
+                        Artist
+                    </div>
+                </div>
+                {% if artists_info|length == 0 %}
+                <h2 style="color: gray;">
+                    Currently There Are No Artists.
+                </h2>
+                {% else %}
+                {% for artist_info in artists_info %}
+                <div class="songs-list">
+                    <div>
+                        <a href="/artist_details/{{artist_info[0]}}">
+                            <img src="{{ url_for('profile_picture', filename='static/uploads/profile-picture/profile-picture.jpg') }}" class="dashboard-artist-cover">
+                        </a>
+                        <div class="dashboard-artist-name">
+                            {{artist_info[0]}}
+                        </div>
+                    </div>
+                </div> 
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

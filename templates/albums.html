@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %} Albums {% endblock%}
+
+{% block body %}
+            <div class="main-cat">
+                <div class="main-title">
+                    <div class="first-heading">
+                        Albums
+                    </div>
+                </div>
+                <div class="songs-list">
+                    {% if albums_info|length == 0 %}
+                    <h2 style="color: gray;">Currently There Are No Albums.</h2>
+                    {% else %}
+                    {% for album_info in albums_info %}
+                    <div class="song">
+                        <div class="song-background">
+                            <div class="song-poster">
+                                <a href="/album/{{album_info[1]}}">
+                                    <img src="{{ url_for('album_cover', filename=album_info[0]) }}" class="poster-dim" alt="Album song image">
+                                </a>
+                            </div>
+                            <div style="position: relative; display:flex;" class="song-details">
+                                <div class="song-name">
+                                    <a href="/album/{{album_info[1]}}" style="text-decoration: none;">
+                                        {{album_info[1]}}
+                                    </a>
+                                </div>
+                                <div style="position: absolute; top:100%; margin-left:135px; margin-top:-6px;" class="dropdown">
+                                    <button onclick="myFunction(this)" class="dropbtn">
+                                        &centerdot;&centerdot;&centerdot;
+                                    </button>
+                                    <div id="myDropdown" class="dropdown-content">
+                                        <a href="">Rating</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="song-artist">
+                                {{album_info[2]}}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div> 
+            </div>
+        </div>
+{% endblock %}

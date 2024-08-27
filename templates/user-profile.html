@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %} Profile {% endblock%}
+
+{% block body %}
+            <div class="main-cat">
+                <div class="album-details">
+                    <div class="album-cov">
+                        <img src="{{ url_for('profile_picture', filename='static/uploads/profile-picture/profile-picture.jpg') }}" class="profile-cover">
+                    </div>
+                    <div class="album-info">
+                        <div>Profile</div>
+                        <div class="album-name">{{name}}</div>
+                        <div class="artist-name">{{username}}</div>
+                    </div>
+                </div>
+                <br><br>
+                <div class="first-heading">
+                    Your Playlists
+                </div>
+            </div>
+            <br>
+            <div class="main-cat">
+                <div class="songs-list">
+                    {% if playlists_name|length == 0 %}
+                    <br>
+                    <h2 style="color: gray;">Currently There Are No Playlists.</h2>
+                    {% else %}
+                    {% for playlist_name in playlists_name %}
+                    <div class="song">
+                        <div class="song-background">
+                            <div class="song-poster">
+                                <img src="{{ url_for('playlist_cover', filename='static/uploads/playlist-cover/cover.jpg') }}" class="poster-dim" alt="Profile Picture">
+                            </div>
+                            <div style="position: relative; display:flex;" class="song-details">
+                                <div class="song-name">
+                                    <a href="/playlist/{{playlist_name}}" style="text-decoration:none;">
+                                        {{playlist_name}}
+                                    </a>
+                                </div>
+                                <div style="position: absolute; top:100%; margin-left:135px; margin-top:-12px;" class="dropdown">
+                                    <button onclick="myFunction(this)" class="dropbtn">
+                                        &centerdot;&centerdot;&centerdot;
+                                    </button>
+                                    <div id="myDropdown" class="dropdown-content">
+                                        <a href="/delete_playlist/{{playlist_name}}">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="song-artist">
+                                Playlist &centerdot; Rythm
+                            </div>
+                        </div>
+                    </div> 
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+{% endblock %}        

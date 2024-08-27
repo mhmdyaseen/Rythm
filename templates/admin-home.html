@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Home</title>
+    <link rel="icon" type="image/ico" href="{{ url_for('static', filename='uploads/favicon/logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600;700&family=Lato:wght@400;700;900&family=Old+Standard+TT:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="admin-dashboard">
+            <a class="dashboard-brand-name-home" href="/admin_home">Rythm</a>
+            <div class="dashboard-heading">
+                Dashboard
+            </div>
+            <div style="margin-left: 45px;">
+                <div>
+                    <p style="font-size: 27px;"><img src="{{ url_for('barchart', filename='static/uploads/charts/top_rated_songs.png') }}" class="admin-dashboard-content-graph"></p>
+                </div>
+                <div class="admin-dashboard-content">
+                    <p style="font-size: 28px;">Normal Users</p>
+                    {{total_normal_users}}
+                </div>
+                <div class="admin-dashboard-content">
+                    <p style="font-size: 26px;">Content Creators</p>
+                    {{total_content_creators}}
+                </div>
+                <div class="admin-dashboard-content">
+                    <p style="font-size: 28px;">Total Songs</p>
+                    {{total_songs}}
+                </div>
+                <div class="admin-dashboard-content">
+                        <p style="font-size: 28px;">Total Albums</p>
+                        {{total_albums}}
+                </div>
+                <div>
+                    <p style="font-size: 27px;"><img src="{{ url_for('barchart', filename='static/uploads/charts/top_viewed_songs.png') }}" class="admin-dashboard-content-graph"></p>
+                </div>
+                <div class="admin-dashboard-content">
+                    <p style="font-size: 28px;">Total Genre</p>
+                    {{total_genres}}
+                </div>
+                <div class="admin-dashboard-content">
+                    <p style="font-size: 28px;">Top Rated Song</p>
+                    <p style="font-size: 27px;">{{top_rated_song_name}}({{rate_top_song}})</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="admin-content">
+            <div class="banner">
+                <a class="brand-name"></a>
+                <div class="utils">
+                    <div class="search" style="margin-right: 10px;">
+                        <a class="show-more" href="/admin_search">Search</a>
+                    </div>
+                    <div class="settings" style="margin-right: 10px;">
+                        <a class="btn" style="margin-right: 0px;" href="/logout">Logout</a>
+                    </div>
+                </div>
+            </div>  
+            <div class="main-cat">
+                <div class="main-title">
+                    <div class="first-heading">
+                        Artists
+                    </div>
+                    <div class="show-all">
+                        <a href="/artist-admin" class="show-more">Show all</a>
+                    </div>
+                </div>
+                {% if artists_info|length == 0 %}
+                <h2 style="color: gray;">
+                    Currently There Are No Artists.
+                </h2>
+                {% else %}
+                {% for artist_info in artists_info %}
+                <div class="songs-list">
+                    <div>
+                        <a href="/artist_details/{{artist_info[0]}}">
+                            <img src="{{ url_for('profile_picture', filename='static/uploads/profile-picture/profile-picture.jpg') }}" class="dashboard-artist-cover">
+                        </a>
+                        <div class="dashboard-artist-name">
+                            {{artist_info[0]}}
+                        </div>
+                    </div>
+                </div> 
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div class="main-cat">
+                <div class="main-title">
+                    <div class="first-heading">
+                        Songs
+                    </div>
+                    <div class="show-all">
+                        <a href="/songs_admin" class="show-more">Show all</a>
+                    </div>
+                </div>
+                <div class="songs-list">
+                    {% if songs_info|length == 0 %}
+                    <h2 style="color: gray;">
+                        Currently There Are No Songs.
+                    </h2>
+                    {% else %}
+                    {% for song_info in songs_info %}
+                    <div class="song">
+                        <div class="song-background">
+                            <div class="song-poster">
+                                <a style="cursor:pointer;"  onclick="audioControl('{{song_info[1]}}')" id="play-button">
+                                    <img src="{{ url_for('song_cover', filename=song_info[0] )}}" class="poster-dim" alt="Album song image">
+                                </a>
+                                <audio src="{{url_for('play_song', song_name=song_info[1])}}" style="display: none;" id="{{song_info[1]}}"></audio>
+                            </div>
+                            <div style="position: relative; display:flex;" class="song-details">
+                                <div class="song-name">
+                                    <a style="cursor:pointer;"  onclick="audioControl('{{song_info[1]}}')" id="play-button">{{song_info[1]}}</a>
+                                    <audio src="{{url_for('play_song', song_name=song_info[1])}}" style="display: none;" id="{{song_info[1]}}"></audio>
+                                </div>
+                                <div style="position: absolute; top:100%; margin-left:135px; margin-top:-6px;" class="dropdown">
+                                    <button onclick="myFunction(this)" class="dropbtn">
+                                        &centerdot;&centerdot;&centerdot;
+                                    </button>
+                                    <div id="myDropdown" class="dropdown-content">
+                                        <a href="/lyrics_admin/{{song_info[1]}}">Lyrics</a>
+                                        <a href="/delete_song_admin/{{song_info[1]}}">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="song-artist">
+                                {{song_info[2]}}
+                            </div>
+                        </div>
+                    </div> 
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="main-cat">
+                <div class="main-title">
+                    <div class="first-heading">
+                        Albums
+                    </div>
+                    <div class="show-all">
+                        <a href="/albums_admin" class="show-more">Show all</a>
+                    </div>
+                </div>
+                <div class="songs-list">
+                    {% if albums_info|length == 0 %}
+                    <h2 style="color: gray;">Currently There Are No Albums.</h2>
+                    {% else %}
+                    {% for album_info in albums_info %}
+                    <div class="song">
+                        <div class="song-background">
+                            <div class="song-poster">
+                                <a href="/album_song_admin/{{album_info[1]}}">
+                                    <img src="{{ url_for('album_cover', filename=album_info[0]) }}" class="poster-dim" alt="Album song image">
+                                </a>
+                            </div>
+                            <div style="position: relative; display:flex;" class="song-details">
+                                <div class="song-name">
+                                    <a href="/album_song_admin/{{album_info[1]}}" style="text-decoration: none;">
+                                        {{album_info[1]}}
+                                    </a>
+                                </div>
+                                <div style="position: absolute; top:100%; margin-left:135px; margin-top:-6px;" class="dropdown">
+                                    <button onclick="myFunction(this)" class="dropbtn">
+                                        &centerdot;&centerdot;&centerdot;
+                                    </button>
+                                    <div id="myDropdown" class="dropdown-content">
+                                        <a href="">Rating</a>
+                                        <a href="/delete_album_admin/{{album_info[1]}}">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="song-artist">
+                                {{album_info[2]}}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function myFunction(button) {
+            var dropdown = button.nextElementSibling;
+            var allDropdowns = document.getElementsByClassName('dropdown-content');
+    
+            for (var i = 0; i < allDropdowns.length; i++) {
+                allDropdowns[i].classList.remove('show');
+            }
+    
+            dropdown.classList.toggle('show');
+        }
+    
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName('dropdown-content');
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        document.getElementById("popup-trigger-button").addEventListener("click", function(){
+            document.getElementById("popup-trigger-checkbox").checked = true;
+        });   
+        
+        async function audioControl(id){
+            const audio = document.getElementById(id);
+
+            if (audio.paused){
+                audio.play();
+            }
+            else{
+                audio.pause();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock%}</title>
+    <link rel="icon" type="image/ico" href="{{ url_for('static', filename='uploads/favicon/logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600;700&family=Lato:wght@400;700;900&family=Old+Standard+TT:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+            <div class="banner">
+                <a class="brand-name" href="/home">Rythm</a>
+                <div class="utils">
+                    <div class="settings">
+                        <a class="btn" href="{{ url_for('content_creator') }}">Content Creator</a>
+
+                    </div>
+                    <div class="search">
+                        <a class="btn" href="/user_profile">Profile</a>
+                    </div>
+                    <div class="search" style="margin-right: 10px;">
+                        <a class="show-more" href="/search">Search</a>
+                    </div>
+                    <div class="settings" style="margin-right: 10px;">
+                        <a class="show-more" href="/logout">Logout</a>
+                    </div>
+                </div>
+            </div>  
+        {% block body %}{% endblock %}
+        <div class="side-bar">
+            <div class="playlist-head">
+                <h3 class="playlist-heading">Playlists</h3>
+                <label class="add-btn" for="popup-trigger">Add</label> 
+                <input type="checkbox" id="popup-trigger">
+
+                <div class="overlay">
+                    <div class="popup">
+                        <label for="popup-trigger" class="close-button">&#10006;</label>
+                        <form action="/new_playlist" method="POST">
+                            <div style="font-size: 20px;">New Playlist</div>
+                            <div>
+                                <input type="text" class="rename-playlist" name="playlist-name" id="playlist-name" placeholder="Name" required>
+                            </div><br>
+                            <input type="submit" class="get-started-playlist">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="playlists">
+                {% if playlists_info|length == 0%}
+                <h4 style="color: grey; margin-left:10px; margin-top:0px;">Create Your First Playlist.</h4>
+                {% else %}
+                {% for playlist_info in playlists_info %}
+                <div class="playlist">
+                    <div class="playlist-poster">
+                        <img src="{{ url_for('playlist_cover', filename='static/uploads/playlist-cover/cover.jpg') }}" class="playlist-img">
+                    </div>
+                    <div class="playlist-detail">      
+                        <div class="playlist-name">
+                            <a href="/playlist/{{playlist_info[0]}}" style="text-decoration:none;">
+                                {{playlist_info[0]}}
+                            </a>
+                        </div>
+                        <div class="playlist-show">
+                            Playlist &centerdot; Rythm
+                        </div>
+                    </div>
+                    <div style="margin-left:50px;">
+                      <a href="/delete_playlist/{{playlist_info[0]}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                        </svg>
+                      </a>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <script>
+        function myFunction(button) {
+            var dropdown = button.nextElementSibling;
+            var allDropdowns = document.getElementsByClassName('dropdown-content');
+    
+            for (var i = 0; i < allDropdowns.length; i++) {
+                allDropdowns[i].classList.remove('show');
+            }
+    
+            dropdown.classList.toggle('show');
+        }
+    
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName('dropdown-content');
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        document.getElementById("popup-trigger-button").addEventListener("click", function(){
+            document.getElementById("popup-trigger-checkbox").checked = true;
+        });   
+        
+        async function audioControl(id){
+            const audio = document.getElementById(id);
+
+            if (audio.paused){
+                audio.play();
+            }
+            else{
+                audio.pause();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block title %} Home - CC {% endblock%}
+
+{% block body %}
+            <div class="main-cat">
+                <div class="main-title">
+                    <div class="first-heading">
+                        Dashboard
+                    </div>
+                </div>
+                <div>
+                    <div class="cc-dashboard">
+                        <p style="font-size: 28px;">Total Songs</p>
+                        {{no_of_songs}}
+                    </div>
+                    <div class="cc-dashboard">
+                        <p style="font-size: 28px;">Total Albums</p>
+                        {{no_of_albums}}
+                    </div>
+                    <div class="cc-dashboard">
+                        <p style="font-size: 28px;">Avg Rating</p>
+                        {{user_avg_rating}}
+                    </div>
+                    <div class="cc-dashboard">
+                            <p style="font-size: 28px;">Top Rated Song</p>
+                            <p style="font-size: 27px;">{{top_rated_song}} ({{rate_of_topsong}})</p>
+                    </div>
+                </div>
+            </div>
+            <div class="main-cat">
+                <div class="main-title">
+                    <div class="first-heading">
+                        Your Songs
+                    </div>
+                    <div class="show-all">
+                        <a href="{{ url_for('cc_song') }}" class="show-more">Show all</a>
+                    </div>
+                </div>
+                <div class="songs-list">
+                    {% if songs_info|length == 0 %}
+                    <h2 style="color: gray;">
+                        Currently You Haven't Uploaded Any Songs.
+                    </h2>
+                    {% else %}
+                    {% for song_info in songs_info %}
+                    <div class="song">
+                        <div class="song-background">
+                            <div class="song-poster">
+                                <a style="cursor:pointer;"  onclick="audioControl('{{song_info[1]}}')" id="play-button">
+                                    <img src="{{ url_for('song_cover', filename=song_info[0] )}}" class="poster-dim" alt="Album song image">
+                                </a>
+                                <audio src="{{url_for('play_song', song_name=song_info[1])}}" style="display: none;" id="{{song_info[1]}}"></audio>
+                            </div>
+                            <div style="position: relative; display:flex;" class="song-details">
+                                <div class="song-name">
+                                    <a style="cursor:pointer;"  onclick="audioControl('{{song_info[1]}}')" id="play-button">{{song_info[1]}}</a>
+                                    <audio src="{{url_for('play_song', song_name=song_info[1])}}" style="display: none;" id="{{song_info[1]}}"></audio>
+                                </div>
+                                <div style="position: absolute; top:100%; margin-left:135px; margin-top:-6px;" class="dropdown">
+                                    <button onclick="myFunction(this)" class="dropbtn">
+                                        &centerdot;&centerdot;&centerdot;
+                                    </button>
+                                    <div id="myDropdown" class="dropdown-content">
+                                        <a href="/edit_song/{{song_info[1]}}">Edit</a>
+                                        <a href="/delete_song/{{song_info[1]}}">Delete</a>
+                                        <a href="/lyrics/{{song_info[1]}}">Lyrics</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="song-artist">
+                                {{song_info[2]}}
+                            </div>
+                        </div>
+                    </div> 
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="main-cat">
+                <div class="main-title">
+                    <div class="first-heading">
+                        Your Albums
+                    </div>
+                    <div class="show-all">
+                        <a href="/cc_album" class="show-more">Show all</a>
+                    </div>
+                </div>
+                <div class="songs-list">
+                    {% if albums_info|length == 0 %}
+                    <h2 style="color: gray;">Currently You Haven't Uploaded Any Albums.</h2>
+                    {% else %}
+                    {% for album_info in albums_info %}
+                    <div class="song">
+                        <div class="song-background">
+                            <div class="song-poster">
+                                <a href="/album/{{album_info[1]}}">
+                                    <img src="{{ url_for('album_cover', filename=album_info[0]) }}" class="poster-dim" alt="Album song image">
+                                </a>
+                            </div>
+                            <div style="position: relative; display:flex;" class="song-details">
+                                <div class="song-name">
+                                    <a href="/album/{{album_info[1]}}" style="text-decoration: none;">
+                                        {{album_info[1]}}
+                                    </a>
+                                </div>
+                                <div style="position: absolute; top:100%; margin-left:135px; margin-top:-6px;" class="dropdown">
+                                    <button onclick="myFunction(this)" class="dropbtn">
+                                        &centerdot;&centerdot;&centerdot;
+                                    </button>
+                                    <div id="myDropdown" class="dropdown-content">
+                                        <a href="/edit_album/{{album_info[1]}}">Edit</a>
+                                        <a href="/delete_album/{{album_info[1]}}">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="song-artist">
+                                {{album_info[2]}}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+{% endblock %}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock%}</title>
+    <link rel="icon" type="image/ico" href="{{ url_for('static', filename='uploads/favicon/logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600;700&family=Lato:wght@400;700;900&family=Old+Standard+TT:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="admin-cat">
+            <div class="admin-banner">
+                <a class="dashboard-brand-name" href="/admin_home">Rythm</a>
+                <div class="utils">
+                    <div class="search" style="margin-right:10px;">
+                        <a class="show-more" href="/admin_search">Search</a>
+                    </div>
+                    <div class="settings" style="margin-right: 10px;">
+                        <a class="btn" style="margin-right: 0px;" href="/logout">Logout</a>
+                    </div>
+                </div>
+            </div>  
+            {% block body %}{% endblock %}
+        </div>
+    </div>
+    <script>
+        function myFunction(button) {
+            var dropdown = button.nextElementSibling;
+            var allDropdowns = document.getElementsByClassName('dropdown-content');
+    
+            for (var i = 0; i < allDropdowns.length; i++) {
+                allDropdowns[i].classList.remove('show');
+            }
+    
+            dropdown.classList.toggle('show');
+        }
+    
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName('dropdown-content');
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        document.getElementById("popup-trigger-button").addEventListener("click", function(){
+            document.getElementById("popup-trigger-checkbox").checked = true;
+        });   
+        
+        async function audioControl(id){
+            const audio = document.getElementById(id);
+
+            if (audio.paused){
+                audio.play();
+            }
+            else{
+                audio.pause();
+            }
+        }
+    </script>
+</body>
+</html>

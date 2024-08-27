@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %} Edit Playlist {% endblock%}
+
+{% block body %}
+            <div class="main-cat">
+                <div class="album-details">
+                    <div class="album-cov">
+                        <img src="{{ url_for('playlist_cover', filename='static/uploads/playlist-cover/cover.jpg') }}" class="album-cover">
+                    </div>
+                    <div class="album-info">
+                        <div>Edit Playlist</div>
+                        <div>
+                            <input type="text" class="rename-playlist" name="playlist-name" id="playlist-name"  value="{{playlist.name}}" placeholder="Name">
+                        </div>
+                        <div class="artist-name" style="margin-top:10px;">{{username}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="song-list">
+                <div class="list-heading">
+                    Songs
+                </div>
+                <div class="main-list">
+                    {% if songs|length == 0 %}
+                    <h3 style="color: gray;">Currently You Haven't Added any Songs to this Playlist.</h3>
+                    {% else %}
+                    {% for song in songs %}
+                    <div class="list-element">
+                        <div>1</div>
+                        <div class="list-poster">
+                            <img src="{{ url_for('song_cover', filename=song.cover_path )}}" class="playlist-img">
+                        </div>
+                        <div class="list-detail">
+                            <div>{{song.name}}</div>
+                            <div class="list-show">{{song.artist_name}}</div>
+                        </div>
+                        <div style="margin-left:700px; font-size: 14px;color:rgba(255, 255, 255,0.54);">
+                            <a href="/delete_song/<>">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                                </svg>
+                              </a>
+                          </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+{% endblock %}

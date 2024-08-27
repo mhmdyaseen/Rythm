@@ -1,0 +1,56 @@
+{% extends 'base-admin.html' %}
+
+{% block title %} Songs - Album [Admin]{% endblock %}
+
+{% block body %}
+            <div class="main-cat">
+                <div class="main-title">
+                    <div class="first-heading">
+                        Album Songs
+                    </div>
+                </div>
+                <div class="album-details">
+                    <div class="album-cov">
+                        <img src="{{ url_for('album_cover', filename=album_details[0]) }}" class="album-cover">
+                    </div>
+                    <div class="album-info">
+                        <div>Album</div>
+                        <div class="album-name">{{album_details[1]}}</div>
+                        <div class="artist-name">{{album_details[2]}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="song-list">
+                <div class="list-heading">
+                    Songs
+                </div>
+                <div class="main-list">
+                        {% if songs_info|length == 0 %}
+                            <h3 style="color: gray;">Currently You Haven't Uploaded Any Songs In This Album.</h3>
+                        {% else %}
+                        {% for song_info in songs_info %}
+                        <div style="display: flex; justify-content:space-between; margin-top:20px;">
+                            <div class="list-detail">
+                                <div>{{song_info[0]}}</div>
+                                <div class="list-show">{{song_info[1]}}</div>
+                            </div>
+                            <div style="margin-right:150px; font-size: 14px; color:rgba(255, 255, 255,0.54);">
+                                {{song_info[2]}}
+                                <div class="dropdown">
+                                    <button onclick="myFunction(this)" class="dropbtn">
+                                        &centerdot;&centerdot;&centerdot;
+                                    </button>
+                                    <div id="myDropdown" class="dropdown-content">
+                                            <a href="/edit/{{song_info[0]}}">Edit</a>
+                                            <a href="/delete/{{song_info[0]}}">Delete</a>
+                                            <a href="/lyrics/{{song_info[0]}}">Lyrics</a> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        {% endfor %}
+                        {% endif %}
+                </div>
+            </div>
+        </div>
+{% endblock %}

@@ -1,0 +1,238 @@
+{% extends 'base.html' %}
+
+{% block title %} Search {% endblock%}
+
+{% block body %}
+            <div class="first-heading-search">
+                Search
+            </div>
+            <div style="text-align: center;">
+                <form method="POST" action="/go_search" enctype="multipart/form-data" class="song-upload-form">
+                    <select name="select-search" id="select-search" class="search-select">
+                        <option value="song">Song</option>
+                        <option value="album">Album</option>
+                        <option value="artist">Artist</option>
+                        <option value="genre">Genre</option>
+                    </select>
+                    <input type="text" name="search-query" id="search-query" class="search-box" placeholder="Search Songs, Albums, Artists, Genre" required>
+                    <input type="submit" class="search-submit">
+                    <br><br>
+                </form>
+            </div>
+            {% if  searching == 'song' %}
+            <div class="main-cat">
+                <div class="main-title">
+                    <div class="first-heading">
+                        Songs
+                    </div>
+                </div>
+                <div class="songs-list">
+                    <div class="song">
+                        <div class="song-background">
+                            <div class="song-poster">
+                                <img src="{{ url_for('song_cover', filename=song[0] )}}" class="poster-dim" alt="Song image">
+                            </div>
+                            <div style="position: relative; display:flex;" class="song-details">
+                                <div class="song-name">
+                                    {{song[1]}}
+                                </div>
+                                <div style="position: absolute; top:100%; margin-left:135px; margin-top:-6px;" class="dropdown">
+                                    <button onclick="myFunction(this)" class="dropbtn">
+                                        &centerdot;&centerdot;&centerdot;
+                                    </button>
+                                    <div id="myDropdown" class="dropdown-content">
+                                        <a href="/lyrics/{{song[1]}}">Lyrics</a>
+                                        <p style="color: grey; margin-left:15px;">Rate Song &darr;</p>
+                                        <form style="margin-left: 15px;" action="/rate_song/{{song[1]}}" method="POST">
+                                            <button type="submit" class="rate-button" name="rating" value="1">1</button>
+                                            <button type="submit" class="rate-button" name="rating" value="2">2</button>
+                                            <button type="submit" class="rate-button" name="rating" value="3">3</button>
+                                            <button type="submit" class="rate-button" name="rating" value="4">4</button>
+                                            <button type="submit" class="rate-button" name="rating" value="5">5</button>
+                                        </form> 
+                                        {% if playlists_name|length == 0 %}    
+                                        <p style="margin-top:15px;"></p>           
+                                        {% else %}
+                                        <p style="color: grey; margin-left:15px;">Add to Playlist &darr;</p>
+                                        {% for playlist_name in playlists_name %}
+                                            <a href="/add_to_playlist/{{playlist_name}}/{{song[1]}}" style="margin-bottom:8px;">{{playlist_name}}</a>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="song-artist">
+                                {{song[2]}}
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            {% elif  searching == 'album' %}
+            <div class="main-cat">
+                <div class="main-title">
+                    <div class="first-heading">
+                        Album
+                    </div>
+                </div>
+                <div class="songs-list">
+                    <div class="song">
+                        <div class="song-background">
+                            <div class="song-poster">
+                                <img src="{{ url_for('album_cover', filename=album[0] )}}" class="poster-dim" alt="Album image">
+                            </div>
+                            <div style="position: relative; display:flex;" class="song-details">
+                                <div class="song-name">
+                                    {{album[1]}}
+                                </div>
+                                <div style="position: absolute; top:100%; margin-left:135px; margin-top:-6px;" class="dropdown">
+                                    <button onclick="myFunction(this)" class="dropbtn">
+                                        &centerdot;&centerdot;&centerdot;
+                                    </button>
+                                    <div id="myDropdown" class="dropdown-content">
+                                        <a href="">Rating</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="song-artist">
+                                {{album[2]}}
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            {% elif searching == 'artist' %}
+            <div class="main-cat">
+                <div class="main-title">
+                    <div class="first-heading">
+                        {{artist_username}}'s Songs
+                    </div>
+                    <div class="show-all">
+                        <a href="/artist_song/{{artist_username}}" class="show-more">Show all</a>
+                    </div>
+                </div>
+                <div class="songs-list">
+                    {% if songs|length == 0 %}
+                    <h2 style="color: gray;">
+                        Currently You Haven't Uploaded Any Songs.
+                    </h2>
+                    {% else %}
+                    {% for song in songs %}
+                    <div class="song">
+                        <div class="song-background">
+                            <div class="song-poster">
+                                <img src="{{ url_for('song_cover', filename=song[0] )}}" class="poster-dim" alt="Song image">
+                            </div>
+                            <div style="position: relative; display:flex;" class="song-details">
+                                <div class="song-name">
+                                    {{song[1]}}
+                                </div>
+                                <div style="position: absolute; top:100%; margin-left:135px; margin-top:-6px;" class="dropdown">
+                                    <button onclick="myFunction(this)" class="dropbtn">
+                                        &centerdot;&centerdot;&centerdot;
+                                    </button>
+                                    <div id="myDropdown" class="dropdown-content">
+                                        <a href="/lyrics/{{song[1]}}">Lyrics</a>
+                                        <p style="color: grey; margin-left:15px;">Rate Song &darr;</p>
+                                        <form style="margin-left: 15px;" action="/rate_song/{{song[1]}}" method="POST">
+                                            <button type="submit" class="rate-button" name="rating" value="1">1</button>
+                                            <button type="submit" class="rate-button" name="rating" value="2">2</button>
+                                            <button type="submit" class="rate-button" name="rating" value="3">3</button>
+                                            <button type="submit" class="rate-button" name="rating" value="4">4</button>
+                                            <button type="submit" class="rate-button" name="rating" value="5">5</button>
+                                        </form> 
+                                        {% if playlists_name|length == 0 %}    
+                                        <p style="margin-top:15px;"></p>           
+                                        {% else %}
+                                        <p style="color: grey; margin-left:15px;">Add to Playlist &darr;</p>
+                                        {% for playlist_name in playlists_name %}
+                                            <a href="/add_to_playlist/{{playlist_name}}/{{song[1]}}" style="margin-bottom:8px;">{{playlist_name}}</a>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="song-artist">
+                                {{song[2]}}
+                            </div>
+                        </div>
+                    </div> 
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="main-cat">
+                <div class="main-title">
+                    <div class="first-heading">
+                        {{artist_username}}'s Albums
+                    </div>
+                    <div class="show-all">
+                        <a href="/artist_album/{{artist_username}}" class="show-more">Show all</a>
+                    </div>
+                </div>
+                <div class="songs-list">
+                    {% if albums|length == 0 %}
+                    <h2 style="color: gray;">Currently You Haven't Uploaded Any Albums.</h2>
+                    {% else %}
+                    {% for album in albums %}
+                    <div class="song">
+                        <div class="song-background">
+                            <div class="song-poster">
+                                <a href="/album/{{album[1]}}">
+                                    <img src="{{ url_for('album_cover', filename=album[0]) }}" class="poster-dim" alt="Album image">
+                                </a>
+                            </div>
+                            <div style="position: relative; display:flex;" class="song-details">
+                                <div class="song-name">
+                                    <a href="/album/{{album[1]}}" style="text-decoration: none;">
+                                        {{album[1]}}
+                                    </a>
+                                </div>
+                                <div style="position: absolute; top:100%; margin-left:135px; margin-top:-6px;" class="dropdown">
+                                    <button onclick="myFunction(this)" class="dropbtn">
+                                        &centerdot;&centerdot;&centerdot;
+                                    </button>
+                                    <div id="myDropdown" class="dropdown-content">
+                                        <a href="">Rating</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="song-artist">
+                                {{album[2]}}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            {% elif searching == 'genre' %}
+            <div class="main-cat">
+                <div class="main-title">
+                    <div class="first-heading">
+                        Genre
+                    </div>
+                </div>
+                <div class="songs-list">
+                    <div class="song">
+                        <div class="song-background">
+                            <div class="song-poster">
+                                <a href="/genre/{{genre}}">
+                                    <img src="{{ url_for('genre_cover', filename='static/uploads/genre-cover/' + genre_cover) }}" class="poster-dim" alt="Genre image">
+                                </a>
+                            </div>
+                            <div class="song-name">
+                                <a href="/genre/{{genre}}" style="text-decoration: none;">
+                                   {{genre}}
+                                </a>
+                            </div>
+                            <div class="song-artist">
+                                Genre &centerdot; Rythm
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            {% endif %}
+        </div>
+{% endblock %}        

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %} Edit Song {% endblock%}
+
+{% block body %}
+            <div class="main-cat">
+                <div class="main-title">
+                    <div class="first-heading">
+                        Edit Song
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <form method="POST" action="/edit_song/{{song_details.name}}" enctype="multipart/form-data" class="song-upload-form">
+                        <label for="song-cover">Song Cover : </label>
+                        <input type="file" name="song-cover" id="song-cover" style="margin-left: 29px;" value="{{song_details.cover_path}}" accept="image/*" required>
+                        <br><br>
+
+                        <label for="song" style="margin-right: 50px;">Song : </label>
+                        <input type="file" name="song" id="song" style="margin-left: 29px;" value="{{song_details.audio_file_path}}" accept=".mp3" required>
+                        <br><br>
+
+                        <label for="song-name" style="margin-right: 7px">Song Name :</label>
+                        <input type="text" name="song-name" id="song-name" class="song-upload-e1" value="{{song_details.name}}" required>
+                        <br>
+                        
+                        <label for="artist-name">Artist Name :</label>
+                        <input type="text" name="artist-name" id="artist-name" class="song-upload-e1"  value="{{song_details.artist_name}}" required>
+                        <br>
+                        
+                        <label for="year" style="margin-right: 55px;">Year :</label>
+                        <input type="number" name="year" id="year" class="song-upload-e1" value="{{song_details.year}}" required>
+                        <br>  
+
+                        <label for="lyrics" style="margin-right: 30px;">Lyrics :</label>
+                        <button onclick="clearSongCover()" class="dropbtn">&#10006</button>
+                        <input type="file" name="lyrics" id="lyrics" style="margin-left: 20px;" value="{{song_details.lyrics}}" accept=".txt">
+                        <br><br>
+
+                        <label for="duration" style="margin-right: 23px;">Duration :</label>
+                        <input type="text" name="duration" id="duration" class="song-upload-e1" value="{{song_details.duration}}" pattern="[0-9]+:[0-5][0-9]" title="Please enter a valid duration (eg., 3:45)" required>
+                        <br>
+
+                        <label for="genre" style="margin-right: 55px;">Genre :</label>
+                        <select name="genre-select" id="genre-select" style="color:black; margin-left:10px;">
+                            <option value="Hip-Hop">Hip Hop</option>
+                            <option value="Rap">Rap</option>
+                            <option value="Rock">Rock</option>
+                            <option value="Pop">Pop</option>
+                            <option value="No Genre">No Genre</option>
+                        </select>
+                        <br><br>
+
+                        <div>
+                            <input type="submit" class="get-started" style="margin-top: 29px;">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+{% endblock %}
